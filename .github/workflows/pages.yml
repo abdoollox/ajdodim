@@ -23,8 +23,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      # prototip/index.html artifact uchun yozilgan: doctype, charset va viewport'ni artifact o'zi qo'shadi.
+      # Pages'da ham telefonda to'g'ri ochilishi uchun xuddi shunday qobiqqa o'raymiz.
+      - name: Sahifani to'liq HTML hujjatga o'rash
+        run: |
+          mkdir -p _site
+          cp -R prototip/. _site/
+          {
+            printf '%s\n' \
+              '<!doctype html>' \
+              '<html lang="uz">' \
+              '<head>' \
+              '<meta charset="utf-8">' \
+              '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">' \
+              '<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>' \
+              '</head>' \
+              '<body>'
+            cat prototip/index.html
+            printf '%s\n' '</body>' '</html>'
+          } > _site/index.html
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: prototip
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
