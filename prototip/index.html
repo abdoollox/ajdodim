@@ -119,6 +119,55 @@ button { font: inherit; color: inherit; }
 .icobtn[aria-pressed="true"] .en { display: none; }
 .icobtn[aria-pressed="true"] .ex { display: block; }
 
+.fbtn { position: relative; }
+.fbtn.on { border-color: var(--gold-bright); color: var(--gold-bright); }
+.fbadge {
+  position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px; border-radius: 9px; padding: 0 4px; box-sizing: border-box;
+  background: var(--gold-bright); color: #1B2A20; font-size: 11px; font-weight: 700; display: grid; place-items: center; font-variant-numeric: tabular-nums;
+}
+.fstrip {
+  display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; padding-block: 12px 8px; background: var(--surface);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--line); font-size: 13px;
+}
+.fslbl { color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
+.fpill { border: 1px solid var(--gold); background: var(--gold-soft); color: var(--ink); border-radius: 999px; padding: 3px 10px; cursor: pointer; font-size: 12.5px; }
+.fpill span { color: var(--gold); font-weight: 700; margin-left: 2px; }
+.fpill:hover { border-color: var(--danger); }
+.fsn { color: var(--muted); font-variant-numeric: tabular-nums; margin-left: 4px; }
+.fslink { border: 0; background: none; color: var(--accent); cursor: pointer; font-size: 13px; padding: 2px 4px; text-decoration: underline; text-underline-offset: 2px; }
+.fpanel {
+  position: absolute; z-index: 7; background: var(--surface); box-shadow: var(--shadow); display: flex; flex-direction: column;
+  top: 14px; left: max(14px, env(safe-area-inset-left, 0px)); bottom: 14px; width: 330px; border-radius: 14px; border: 1px solid var(--line);
+}
+.fsec h3 { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; font-weight: 600; }
+.fhint { margin: -4px 0 8px; font-size: 12px; color: var(--muted); }
+.fchips { display: flex; flex-wrap: wrap; gap: 6px; }
+.fchips button {
+  border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 11px; cursor: pointer; font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.fchips button small { color: var(--muted); margin-left: 2px; }
+.fchips button:hover { border-color: var(--accent); }
+.fchips button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.fchips button[aria-pressed="true"] small { color: inherit; opacity: .8; }
+.frange { display: flex; gap: 8px; align-items: end; }
+.frange label { display: grid; gap: 4px; font-size: 12px; color: var(--muted); flex: 1; min-width: 0; }
+.frange input, .fsec select {
+  height: 38px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  font: inherit; font-size: 14px; padding: 0 10px; box-sizing: border-box; width: 100%; min-width: 0;
+}
+.frange span { padding-bottom: 10px; color: var(--muted); }
+.fchk { display: flex; gap: 8px; align-items: center; font-size: 13.5px; padding: 4px 0; cursor: pointer; }
+.ffoot { display: flex; gap: 8px; align-items: center; padding: 12px 18px; border-top: 1px solid var(--line); }
+.ffoot span { margin-right: auto; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.fempty { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 24px 0; }
+.filtermode .card:not(.fm) { opacity: .22; }
+.filtermode .card.fm { border-color: var(--accent); }
+.filtermode .card.fmsp { opacity: .7; }
+.filtermode .card.fmsp .sp { background: var(--accent-soft); color: var(--ink); font-weight: 600; }
+.filtermode .kinlbl, .filtermode .glbl, .filtermode .tg { opacity: .4; }
+
 /* ---------- Asosiy maydon ---------- */
 main { position: relative; flex: 1; min-height: 0; }
 #stage { position: absolute; inset: 0; overflow: hidden; cursor: grab; touch-action: none; }
@@ -514,6 +563,12 @@ main { position: relative; flex: 1; min-height: 0; }
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   .drawer[hidden] { transform: translateY(30px); }
+  .fpanel {
+    left: 0; right: 0; bottom: 0; top: auto; width: auto; max-height: 78%;
+    border-radius: 16px 16px 0 0; border-width: 1px 0 0;
+    padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
   .dhead::before { content: ""; position: absolute; left: 50%; top: 6px; width: 40px; height: 4px; border-radius: 2px; background: var(--line); transform: translateX(-50%); }
   .hint { display: none; }
   .gen { padding: 3px 7px 3px 6px; }
@@ -563,12 +618,17 @@ main { position: relative; flex: 1; min-height: 0; }
       <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="4" cy="4" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 6.5v2a3 3 0 0 0 3 3h2.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
       Kim kimga kim?
     </button>
+    <button class="icobtn fbtn" id="fBtn" aria-expanded="false" aria-controls="fpanel" aria-label="Filtr" title="Filtr">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2.5 4h13M5 9h8M7.5 14h3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span class="fbadge" id="fBadge" hidden></span>
+    </button>
     <button class="icobtn" id="fsBtn" hidden aria-pressed="false" aria-label="To‘liq ekran" title="To‘liq ekran (F)">
       <svg class="en" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 6V2h4M12 2h4v4M16 12v4h-4M6 16H2v-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <svg class="ex" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M6 2v4H2M16 6h-4V2M12 16v-4h4M2 12h4v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
 </header>
+<div class="fstrip" id="fstrip" hidden aria-live="polite"></div>
 
 <main>
   <div id="stage" aria-label="Shajara daraxti">
@@ -602,6 +662,11 @@ main { position: relative; flex: 1; min-height: 0; }
     <button id="zFit" aria-label="Butun daraxtni ko‘rsatish"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 6V2h4M12 2h4v4M16 12v4h-4M6 16H2v-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
   </div>
   <div class="hint" id="hint"><b>Sichqoncha bilan suring</b>, g‘ildirak bilan kattalashtiring. Kartochkani bosing — shaxs haqida batafsil ochiladi.</div>
+  <aside class="fpanel" id="fpanel" hidden aria-label="Filtr">
+    <div class="dhead"><span>Filtr</span><button class="x" id="fclose" aria-label="Filtrni yopish">×</button></div>
+    <div class="dbody" id="fbody"></div>
+    <div class="ffoot"><span id="fcount"></span><button class="btn sm" id="fclear">Tozalash</button><button class="btn sm pri" id="fdone">Tayyor</button></div>
+  </aside>
   <aside class="drawer" id="drawer" hidden aria-live="polite">
     <div class="dhead"><span id="dlabel">Shaxs</span><button class="x" id="dclose" aria-label="Yopish">×</button></div>
     <div class="dbody" id="dbody"></div>
@@ -1118,7 +1183,8 @@ const RINGS = `<svg width="16" height="10" viewBox="0 0 16 10" aria-hidden="true
 const CAM = `<svg width="11" height="9" viewBox="0 0 12 10" aria-hidden="true"><path d="M1 3h2.5l1-1.5h3L8.5 3H11v6H1z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="6" r="1.8" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>`;
 
 function render() {
-  const h = d3.hierarchy(ROOT, p => collapsed.has(p.id) ? null : p.kids.map(get));
+  const h = d3.hierarchy(ROOT, p => collapsed.has(p.id) ? null : (p === ROOT && F.branch ? [get(F.branch)] : p.kids.map(get)));
+  const fOn = filterActive();
   d3.tree().nodeSize([CW + GX, RH]).separation((a, b) => a.parent === b.parent ? 1 : 1.18)(h);
   layout = new Map();
   const nodes = h.descendants();
@@ -1174,7 +1240,10 @@ function render() {
     const p = n.data, x = n.x - CW / 2, y = n.depth * RH;
     const sps = p.spouses.map(get), sp = sps[0];
     const nph = photosOf(p.id).length;
-    const cls = ["card", p === ROOT ? "root" : "", selected && host(get(selected)) === p ? "sel" : "", hlSet.has(p.id) ? "hl" : "", endHosts.has(p.id) && endIds.has(p.id) ? "end" : ""].join(" ");
+    /* Filtrda: kishining o‘zi mos kelsa — yorqin; faqat kelin/kuyovi mos kelsa — yarim xira, turmush o‘rtog‘i qatori belgilanadi */
+    const fm = fOn && matches(p);
+    const fmsp = fOn && !fm && F.spouses && p.spouses.map(get).some(x => !x.blood && matches(x));
+    const cls = ["card", fm ? "fm" : "", fmsp ? "fmsp" : "", p === ROOT ? "root" : "", selected && host(get(selected)) === p ? "sel" : "", hlSet.has(p.id) ? "hl" : "", endHosts.has(p.id) && endIds.has(p.id) ? "end" : ""].join(" ");
     html += `<div class="${cls}" data-card="${p.id}" style="left:${x}px;top:${y}px">
       <button class="main" data-open="${p.id}" aria-label="${esc(full(p))}, ${esc(years(p))}">
         ${avatar(p)}
@@ -1196,6 +1265,7 @@ function render() {
   }
   cardsEl.innerHTML = html;
   stage.classList.toggle("relmode", !!relState);
+  stage.classList.toggle("filtermode", fOn && !relState);
 
   // Avlodlar yorlig‘i
   let rh = "";
@@ -1276,6 +1346,145 @@ const hintEl = document.getElementById("hint");
 let hintHidden = false;
 function hideHint() { if (hintHidden) return; hintHidden = true; hintEl.style.opacity = 0; setTimeout(() => hintEl.hidden = true, 400); }
 
+/* ===== Filtr =====
+   Bitta filtr holati hamma ko‘rinishlar uchun: daraxtda mos kelmaganlar xiralashadi (shox tanlansa faqat o‘sha shox chiziladi),
+   vaqt chizig‘i va ro‘yxatda esa mos kelmaganlar yashiriladi. */
+const F = { branch: null, gens: new Set(), status: "all", sex: "all", place: "", photo: false, spouses: true, from: null, to: null };
+const BRANCHES = ROOT.kids.map(get);
+const placesOf = p => p.place.split("→").map(x => x.trim()).filter(Boolean);
+function matches(p) {
+  if (!p.blood && !F.spouses) return false;
+  const h = host(p);
+  if (F.branch && !ancestry(h).has(F.branch)) return false;
+  if (F.gens.size && !F.gens.has(p.depth)) return false;
+  if (F.status === "alive" && p.d) return false;
+  if (F.status === "dead" && !p.d) return false;
+  if (F.sex !== "all" && p.sex !== F.sex) return false;
+  if (F.place && !placesOf(p).includes(F.place)) return false;
+  if (F.photo && !photosOf(p.id).length) return false;
+  if (F.from != null && (p.d || NOW) < F.from) return false;
+  if (F.to != null && p.b > F.to) return false;
+  return true;
+}
+function filterParts() {
+  const parts = [];
+  if (F.branch) parts.push([`${get(F.branch).name} shoxi`, "branch"]);
+  if (F.gens.size) parts.push([`${[...F.gens].sort().map(d => ROMAN[d]).join(", ")} avlod`, "gens"]);
+  if (F.status !== "all") parts.push([F.status === "alive" ? "Tiriklar" : "Vafot etganlar", "status"]);
+  if (F.sex !== "all") parts.push([F.sex === "m" ? "Erkaklar" : "Ayollar", "sex"]);
+  if (F.place) parts.push([F.place, "place"]);
+  if (F.photo) parts.push(["Rasmi borlar", "photo"]);
+  if (F.from != null || F.to != null) parts.push([`${F.from ?? "…"}–${F.to ?? "…"} yillarda yashaganlar`, "period"]);
+  if (!F.spouses) parts.push(["Kelin-kuyovlarsiz", "spouses"]);
+  return parts;
+}
+const filterActive = () => filterParts().length > 0;
+const matchCount = () => [...byId.values()].filter(matches).length;
+function resetPart(k) {
+  if (k === "branch") F.branch = null;
+  if (k === "gens") F.gens.clear();
+  if (k === "status") F.status = "all";
+  if (k === "sex") F.sex = "all";
+  if (k === "place") F.place = "";
+  if (k === "photo") F.photo = false;
+  if (k === "period") { F.from = null; F.to = null; }
+  if (k === "spouses") F.spouses = true;
+}
+const fpanel = document.getElementById("fpanel"), fbody = document.getElementById("fbody");
+const fBtn = document.getElementById("fBtn");
+const PERIODS = [["Urush yillari", 1941, 1945], ["1966-yil zilzilasi", 1966, 1966], ["Mustaqillikdan keyin", 1991, null], ["XIX asrda", null, 1900]];
+function seg(key, opts) {
+  return `<div class="fchips">${opts.map(([v, label]) => `<button data-fset="${key}" data-v="${v}" aria-pressed="${String(F[key]) === String(v)}">${esc(label)}</button>`).join("")}</div>`;
+}
+function renderFilterPanel() {
+  const all = [...byId.values()];
+  const places = [...new Set(all.flatMap(placesOf))].sort((a, b) => a.localeCompare(b, "uz"));
+  const maxD = Math.max(...all.map(p => p.depth));
+  fbody.innerHTML = `
+    <div class="fsec"><h3>Oila shoxi</h3><p class="fhint">Rahmonqul hoji otaning qaysi farzandi avlodlari</p>
+      <div class="fchips"><button data-fbranch="" aria-pressed="${!F.branch}">Hammasi</button>${BRANCHES.map(b =>
+        `<button data-fbranch="${b.id}" aria-pressed="${F.branch === b.id}">${esc(b.name)} <small>${descCount(b) + 1}</small></button>`).join("")}</div></div>
+    <div class="fsec"><h3>Avlod</h3><div class="fchips">${Array.from({ length: maxD + 1 }, (_, d) =>
+      `<button data-fgen="${d}" aria-pressed="${F.gens.has(d)}">${ROMAN[d]}</button>`).join("")}</div></div>
+    <div class="fsec"><h3>Holati</h3>${seg("status", [["all", "Hammasi"], ["alive", "Tiriklar"], ["dead", "Vafot etganlar"]])}</div>
+    <div class="fsec"><h3>Jinsi</h3>${seg("sex", [["all", "Hammasi"], ["m", "Erkaklar"], ["f", "Ayollar"]])}</div>
+    <div class="fsec"><h3>Shu yillarda yashaganlar</h3>
+      <div class="frange"><label>dan<input type="number" id="fFrom" inputmode="numeric" placeholder="1860" value="${F.from ?? ""}"></label><span>–</span><label>gacha<input type="number" id="fTo" inputmode="numeric" placeholder="${NOW}" value="${F.to ?? ""}"></label></div>
+      <div class="fchips" style="margin-top:8px">${PERIODS.map(([t, a, b]) => `<button data-fperiod="${a ?? ""},${b ?? ""}" aria-pressed="${F.from === a && F.to === b}">${esc(t)}</button>`).join("")}</div></div>
+    <div class="fsec"><h3>Yashagan joyi</h3><select id="fPlace"><option value="">Hamma joylar</option>${places.map(pl =>
+      `<option${F.place === pl ? " selected" : ""}>${esc(pl)}</option>`).join("")}</select></div>
+    <div class="fsec"><h3>Qo‘shimcha</h3>
+      <label class="fchk"><input type="checkbox" id="fPhoto"${F.photo ? " checked" : ""}> Faqat rasmi borlar</label>
+      <label class="fchk"><input type="checkbox" id="fSp"${F.spouses ? " checked" : ""}> Kelin-kuyovlarni ham ko‘rsatish</label></div>`;
+  document.getElementById("fPlace").onchange = e => { F.place = e.target.value; applyFilters(); };
+  document.getElementById("fPhoto").onchange = e => { F.photo = e.target.checked; applyFilters(); };
+  document.getElementById("fSp").onchange = e => { F.spouses = e.target.checked; applyFilters(); };
+  const yr = v => { const n = parseInt(v, 10); return Number.isFinite(n) ? n : null; };
+  let tmr = 0;
+  const onRange = () => { clearTimeout(tmr); tmr = setTimeout(() => { F.from = yr(fFrom.value); F.to = yr(fTo.value); applyFilters(); }, 350); };
+  const fFrom = document.getElementById("fFrom"), fTo = document.getElementById("fTo");
+  fFrom.oninput = fTo.oninput = onRange;
+}
+function openFilters() {
+  renderFilterPanel(); updateFilterUI();
+  fpanel.hidden = false; fBtn.setAttribute("aria-expanded", "true");
+  if (isNarrow() && !drawer.hidden) drawer.hidden = true;
+  hideHint();
+}
+function closeFilters() { fpanel.hidden = true; fBtn.setAttribute("aria-expanded", "false"); }
+fBtn.onclick = () => fpanel.hidden ? openFilters() : closeFilters();
+document.getElementById("fclose").onclick = closeFilters;
+document.getElementById("fdone").onclick = closeFilters;
+document.getElementById("fclear").onclick = () => clearFilters();
+function clearFilters() {
+  for (const k of ["branch", "gens", "status", "sex", "place", "photo", "period", "spouses"]) resetPart(k);
+  if (!fpanel.hidden) renderFilterPanel();
+  applyFilters();
+}
+function updateFilterUI() {
+  const parts = filterParts(), n = matchCount();
+  const badge = document.getElementById("fBadge");
+  badge.hidden = !parts.length; badge.textContent = parts.length;
+  fBtn.classList.toggle("on", parts.length > 0);
+  document.getElementById("fcount").textContent = `${n} kishi mos keladi`;
+  const strip = document.getElementById("fstrip");
+  strip.hidden = !parts.length;
+  strip.innerHTML = parts.length ? `<span class="fslbl">Filtr:</span>${parts.map(([t, k]) =>
+    `<button class="fpill" data-fdrop="${k}" title="Bu filtrni olib tashlash">${esc(t)} <span aria-hidden="true">×</span></button>`).join("")}
+    <span class="fsn">${n} kishi</span><button class="fslink" data-fopen="1">O‘zgartirish</button><button class="fslink" data-fclear="1">Tozalash</button>` : "";
+  document.getElementById("tSp").checked = F.spouses;
+}
+let lastBranch = null;
+function applyFilters() {
+  updateFilterUI();
+  if (!fpanel.hidden) fbody.querySelectorAll("[data-fset]").forEach(b => b.setAttribute("aria-pressed", String(F[b.dataset.fset]) === b.dataset.v));
+  if (view === "tree") {
+    render();
+    if (F.branch !== lastBranch) fitIds([...layout.keys()], 600, 1);
+  }
+  if (view === "time") { renderTimeline(); markTimelineSel(); if (F.from != null) gwrap.scrollLeft = Math.max(0, (F.from - Y0 - 5) * tl.ppy); }
+  if (view === "list") renderList();
+  lastBranch = F.branch;
+}
+/* Panel ichidagi tugmalar va filtr qatori */
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-fbranch],[data-fgen],[data-fset],[data-fperiod],[data-fdrop],[data-fopen],[data-fclear]");
+  if (!t) return;
+  if (t.dataset.fbranch !== undefined) F.branch = t.dataset.fbranch || null;
+  else if (t.dataset.fgen !== undefined) { const d = +t.dataset.fgen; F.gens.has(d) ? F.gens.delete(d) : F.gens.add(d); }
+  else if (t.dataset.fset) F[t.dataset.fset] = t.dataset.v;
+  else if (t.dataset.fperiod !== undefined) {
+    const [a, b] = t.dataset.fperiod.split(",").map(v => v === "" ? null : +v);
+    const same = F.from === a && F.to === b;
+    F.from = same ? null : a; F.to = same ? null : b;
+  }
+  else if (t.dataset.fdrop) resetPart(t.dataset.fdrop);
+  else if (t.dataset.fopen) { openFilters(); return; }
+  else if (t.dataset.fclear) { clearFilters(); return; }
+  if (!fpanel.hidden) renderFilterPanel();
+  applyFilters();
+});
+
 /* ===== Vaqt chizig‘i (Gantt) ===== */
 const Y0 = 1860, Y1 = 2030;
 const EVENTS = [
@@ -1284,12 +1493,12 @@ const EVENTS = [
   { y: 1966, t: "Toshkent zilzilasi" },
   { y: 1991, t: "Mustaqillik" },
 ];
-const tl = { sort: "family", spouses: true, ppy: 0, cursorYear: null };
+const tl = { sort: "family", ppy: 0, cursorYear: null };
 const gwrap = document.getElementById("gwrap");
 const nameW = () => isNarrow() ? 132 : 220;
 
 function timelineRows() {
-  let rows = familyOrder(tl.spouses);
+  let rows = familyOrder(F.spouses).filter(matches);
   if (tl.sort === "birth") rows = [...rows].sort((a, b) => a.b - b.b);
   return rows;
 }
@@ -1382,7 +1591,7 @@ function setSort(s) {
 }
 document.getElementById("tsFam").onclick = () => setSort("family");
 document.getElementById("tsBirth").onclick = () => setSort("birth");
-document.getElementById("tSp").onchange = e => { tl.spouses = e.target.checked; renderTimeline(); };
+document.getElementById("tSp").onchange = e => { F.spouses = e.target.checked; applyFilters(); };
 function tlZoom(f) {
   const mid = (gwrap.scrollLeft + gwrap.clientWidth / 2 - nameW()) / tl.ppy;
   tl.ppy = Math.max(3, Math.min(30, tl.ppy * f));
@@ -1801,14 +2010,19 @@ function showRoute(i) {
 function renderList() {
   const groups = [];
   (function walk(p) { (groups[p.depth] ||= []).push(p); p.kids.forEach(k => walk(get(k))); })(ROOT);
-  document.getElementById("listin").innerHTML = groups.map((g, d) => {
+  const html = groups.map((g, d) => {
+    let n = 0;
     const rows = g.map(p => {
-      const main = `<button class="lrow" data-go="${p.id}">${avatar(p)}<span class="nm">${esc(full(p))}</span><span class="sub">${esc(years(p))} · ${esc(p.job)}${p.parent ? ` · ${esc(patronymic(p))}` : ""}</span></button>`;
-      const sp = p.spouses.map(get).filter(s => !s.blood).map(s => `<button class="lrow in" data-go="${s.id}">${avatar(s)}<span class="nm">${esc(s.name)}<span class="tag">${s.sex === "f" ? "kelin" : "kuyov"}</span></span><span class="sub">${esc(years(s))} · ${esc(p.name)}ning ${esc(spouseLabel(s, p))}</span></button>`).join("");
+      const ok = matches(p);
+      if (ok) n++;
+      const main = !ok ? "" : `<button class="lrow" data-go="${p.id}">${avatar(p)}<span class="nm">${esc(full(p))}</span><span class="sub">${esc(years(p))} · ${esc(p.job)}${p.parent ? ` · ${esc(patronymic(p))}` : ""}</span></button>`;
+      const sp = p.spouses.map(get).filter(s => !s.blood && F.spouses && matches(s)).map(s => (n++, `<button class="lrow in" data-go="${s.id}">${avatar(s)}<span class="nm">${esc(s.name)}<span class="tag">${s.sex === "f" ? "kelin" : "kuyov"}</span></span><span class="sub">${esc(years(s))} · ${esc(p.name)}ning ${esc(spouseLabel(s, p))}</span></button>`)).join("");
       return main + sp;
     }).join("");
-    return `<section class="lgen"><h2>${ROMAN[d]} avlod <small>${g.length} kishi · ${d3.min(g, p => p.b)}–${d3.max(g, p => p.b)} yillarda tug‘ilgan</small></h2><div class="lrows">${rows}</div></section>`;
+    if (!n) return "";
+    return `<section class="lgen"><h2>${ROMAN[d]} avlod <small>${n} kishi · ${d3.min(g, p => p.b)}–${d3.max(g, p => p.b)} yillarda tug‘ilgan</small></h2><div class="lrows">${rows}</div></section>`;
   }).join("");
+  document.getElementById("listin").innerHTML = html || `<div class="empty fempty">Tanlangan filtrlarga mos kishi topilmadi. <button class="btn sm" data-fclear="1">Filtrni tozalash</button></div>`;
 }
 function setView(v) {
   view = v;
@@ -1928,6 +2142,7 @@ document.addEventListener("keydown", e => {
     if (e.key === "ArrowRight") stepLightbox(1);
     return;
   }
+  if (e.key === "Escape" && !fpanel.hidden) { closeFilters(); return; }
   if (e.key === "Escape" && !drawer.hidden && document.activeElement !== q) closeDrawer();
 });
 
